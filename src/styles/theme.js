@@ -1,7 +1,14 @@
 // App Theme Object
-export const theme = {
+import { createMuiTheme } from '@material-ui/core/styles';
+
+export const theme = createMuiTheme({
   palette: {
     type: 'dark',
+    primary: {
+      light: '#a4a4a4',
+      main: '#101010',
+      dark: '#000000',
+    },
   },
 
   font: {
@@ -23,4 +30,4 @@ export const theme = {
     sm: '767px',
     xs: '375px',
   },
-};
+});
