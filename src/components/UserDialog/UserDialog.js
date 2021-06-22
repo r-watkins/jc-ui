@@ -48,6 +48,7 @@ function UserDialog(props) {
           helperText="Required"
           variant="filled"
           onChange={handleInputChange}
+          color="secondary"
           fullWidth
         />
 
@@ -59,12 +60,13 @@ function UserDialog(props) {
           helperText="Required"
           variant="filled"
           onChange={handleInputChange}
+          color="secondary"
           fullWidth
         />
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose} color="default">
           Cancel
         </Button>
 
@@ -72,7 +74,7 @@ function UserDialog(props) {
           onClick={() => {
             handleSave(user);
           }}
-          color="primary"
+          color="secondary"
         >
           Save
         </Button>

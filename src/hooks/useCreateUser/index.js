@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react';
 
 function useCreateUser() {
-  const [response, setResponse] = useState(null);
+  const [newUserStatus, setNewUserStatus] = useState(null);
 
-  const postUser = useCallback(async (user) => {
+  const setNewUser = useCallback(async (user) => {
     try {
-      const res = await fetch('http://localhost:8005/api/systemusers/', {
+      const response = await fetch('http://localhost:8005/api/systemusers/', {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {
@@ -13,15 +13,15 @@ function useCreateUser() {
         },
       });
 
-      if (res.ok) {
-        setResponse(user);
+      if (response.ok) {
+        setNewUserStatus(user);
       }
     } catch (e) {
       console.error('Error creating user: ', e);
     }
   });
 
-  return [response, postUser];
+  return [newUserStatus, setNewUser];
 }
 
 export default useCreateUser;
