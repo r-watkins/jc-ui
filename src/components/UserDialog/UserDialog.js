@@ -1,5 +1,5 @@
 // React imports
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Component imports
 import Button from '@material-ui/core/Button';
@@ -9,13 +9,17 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-// Style imports
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 function UserDialog(props) {
-  const { open, editUser, handleClose, handleSave } = props;
+  const { open, editUser, handleClose, handleSave, loading } = props;
 
   const [user, setUser] = useState({});
+
+  // store the editable user in the local state
+  useEffect(() => {
+    setUser(editUser);
+  }, [editUser]);
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -35,12 +39,20 @@ function UserDialog(props) {
       disableBackdropClick
     >
       <DialogTitle id="form-dialog-title">
-        {editUser ? `Edit user: ${editUser.username}` : 'Add new user'}
+        {editUser ? (
+          `Edit user: ${editUser.username}`
+        ) : loading ? (
+          <LinearProgress color="secondary" />
+        ) : (
+          'Add new user'
+        )}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
           {editUser
             ? 'Edit user name and email address.'
+            : loading
+            ? ''
             : 'Please enter a user name and email address to create a new user.'}
         </DialogContentText>
 
@@ -53,7 +65,7 @@ function UserDialog(props) {
           variant="filled"
           onChange={handleInputChange}
           color="secondary"
-          value={editUser ? editUser.username : ''}
+          value={editUser && user ? user.username : ''}
           fullWidth
         />
 
@@ -66,7 +78,7 @@ function UserDialog(props) {
           variant="filled"
           onChange={handleInputChange}
           color="secondary"
-          value={editUser ? editUser.email : ''}
+          value={editUser && user ? user.email : ''}
           fullWidth
         />
       </DialogContent>

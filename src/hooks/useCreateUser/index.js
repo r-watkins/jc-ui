@@ -7,10 +7,10 @@ function useCreateUser() {
     try {
       const response = await fetch('http://localhost:8005/api/systemusers/', {
         method: 'POST',
-        body: JSON.stringify(user),
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify(user),
       });
 
       if (response.ok) {

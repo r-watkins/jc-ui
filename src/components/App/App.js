@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import useCurrentUsers from '../../hooks/useCurrentUsers';
 import useCreateUser from '../../hooks/useCreateUser';
 import useDeleteUsers from '../../hooks/useDeleteUsers';
+import useEditUser from '../../hooks/useEditUser';
 
 // Component imports
 import Header from '../Header';
@@ -21,45 +22,54 @@ import { Container } from './styles';
 function App() {
   // State
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editUserId, setEditUserId] = useState(null);
-  const [editUser, setEditUser] = useState(null);
   const [deleteDisabled, setDeleteDisabled] = useState(true);
   const [toDeleteUsers, setToDeleteUsers] = useState([]);
+  const [dialogWait, setDialogWait] = useState(false);
+  const [toEditUser, setToEditUser] = useState(null);
   // Hooks
   const [users, refreshUsers, user, getUser] = useCurrentUsers();
   const [newUserStatus, setNewUser] = useCreateUser();
   const [deleteUsersStatus, setDeleteUsers] = useDeleteUsers();
+  const [editUserStatus, setEditUser] = useEditUser();
 
   // Refresh user list when a new user status updates
   useEffect(() => {
     refreshUsers();
-  }, [newUserStatus, deleteUsersStatus]);
+  }, [newUserStatus, deleteUsersStatus, editUserStatus]);
 
-  // useEffect(() => {
-  //   console.log(user);
-  //   //setEditUser(user);
-  // }, [user]);
+  // Once we get the user object, add it to local state and clear the loading
+  useEffect(() => {
+    setToEditUser(user);
+    setDialogWait(false);
+  }, [user]);
 
-  // Open dialog
+  // Open dialog, have it hold for loading if there is a user object
   const handleDialogOpen = (userId) => {
     if (userId) {
       getUser(userId);
+      setDialogWait(true);
     } else {
-      setEditUserId(null);
+      setDialogWait(false);
     }
+
     setDialogOpen(true);
   };
 
   // Close dialog
   const handleDialogClose = () => {
-    setEditUser(null);
-    setEditUserId(null);
     setDialogOpen(false);
+    setDialogWait(true);
+    setToEditUser(null);
   };
 
   // get new user object from dialog form and post to server
   const handleDialogSave = (user) => {
-    setNewUser(user);
+    if (toEditUser) {
+      setEditUser(user);
+    } else {
+      setNewUser(user);
+    }
+
     setDialogOpen(false);
   };
 
@@ -100,7 +110,8 @@ function App() {
 
         <UserDialog
           open={dialogOpen}
-          editUser={user}
+          editUser={toEditUser}
+          loading={dialogWait}
           handleClose={handleDialogClose}
           handleSave={handleDialogSave}
         />
