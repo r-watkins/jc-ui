@@ -21,10 +21,12 @@ import { Container } from './styles';
 function App() {
   // State
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editUserId, setEditUserId] = useState(null);
+  const [editUser, setEditUser] = useState(null);
   const [deleteDisabled, setDeleteDisabled] = useState(true);
   const [toDeleteUsers, setToDeleteUsers] = useState([]);
   // Hooks
-  const [users, refreshUsers] = useCurrentUsers();
+  const [users, refreshUsers, user, getUser] = useCurrentUsers();
   const [newUserStatus, setNewUser] = useCreateUser();
   const [deleteUsersStatus, setDeleteUsers] = useDeleteUsers();
 
@@ -33,13 +35,25 @@ function App() {
     refreshUsers();
   }, [newUserStatus, deleteUsersStatus]);
 
+  // useEffect(() => {
+  //   console.log(user);
+  //   //setEditUser(user);
+  // }, [user]);
+
   // Open dialog
-  const handleDialogOpen = () => {
+  const handleDialogOpen = (userId) => {
+    if (userId) {
+      getUser(userId);
+    } else {
+      setEditUserId(null);
+    }
     setDialogOpen(true);
   };
 
   // Close dialog
   const handleDialogClose = () => {
+    setEditUser(null);
+    setEditUserId(null);
     setDialogOpen(false);
   };
 
@@ -77,11 +91,16 @@ function App() {
             deleteDisabled={deleteDisabled}
             handleDelete={handleDelete}
           />
-          <UserList users={users} handleDeleteSelect={handleDeleteSelect} />
+          <UserList
+            users={users}
+            handleDeleteSelect={handleDeleteSelect}
+            handleDialogOpen={handleDialogOpen}
+          />
         </Container>
 
         <UserDialog
           open={dialogOpen}
+          editUser={user}
           handleClose={handleDialogClose}
           handleSave={handleDialogSave}
         />

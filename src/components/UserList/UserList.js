@@ -16,7 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import { Container, ListHead } from './styles';
 
 function UserList(props) {
-  const { users, handleDeleteSelect } = props;
+  const { users, handleDeleteSelect, handleDialogOpen } = props;
 
   const [checked, setChecked] = useState([]);
 
@@ -69,7 +69,11 @@ function UserList(props) {
                 />
 
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="edit">
+                  <IconButton
+                    edge="end"
+                    aria-label="edit"
+                    onClick={() => handleDialogOpen(user.id)}
+                  >
                     <EditOutlinedIcon />
                   </IconButton>
                 </ListItemSecondaryAction>

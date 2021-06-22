@@ -26,7 +26,7 @@ function Header(props) {
           <AddButton
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={handleDialogOpen}
+            onClick={() => handleDialogOpen(null)}
           >
             Add user
           </AddButton>

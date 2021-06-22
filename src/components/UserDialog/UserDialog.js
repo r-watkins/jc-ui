@@ -13,7 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // Style imports
 
 function UserDialog(props) {
-  const { open, handleClose, handleSave } = props;
+  const { open, editUser, handleClose, handleSave } = props;
 
   const [user, setUser] = useState({});
 
@@ -34,10 +34,14 @@ function UserDialog(props) {
       aria-labelledby="form-dialog-title"
       disableBackdropClick
     >
-      <DialogTitle id="form-dialog-title">Add new user</DialogTitle>
+      <DialogTitle id="form-dialog-title">
+        {editUser ? `Edit user: ${editUser.username}` : 'Add new user'}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Please enter a user name and email address to create a new user.
+          {editUser
+            ? 'Edit user name and email address.'
+            : 'Please enter a user name and email address to create a new user.'}
         </DialogContentText>
 
         <TextField
@@ -49,6 +53,7 @@ function UserDialog(props) {
           variant="filled"
           onChange={handleInputChange}
           color="secondary"
+          value={editUser ? editUser.username : ''}
           fullWidth
         />
 
@@ -61,6 +66,7 @@ function UserDialog(props) {
           variant="filled"
           onChange={handleInputChange}
           color="secondary"
+          value={editUser ? editUser.email : ''}
           fullWidth
         />
       </DialogContent>
