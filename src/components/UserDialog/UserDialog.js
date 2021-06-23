@@ -14,11 +14,13 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 function UserDialog(props) {
   const { open, editUser, handleClose, handleSave, loading } = props;
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({ username: '', email: '' });
 
   // store the editable user in the local state
   useEffect(() => {
-    setUser(editUser);
+    if (editUser) {
+      setUser(editUser);
+    }
   }, [editUser]);
 
   const handleInputChange = (event) => {
@@ -29,6 +31,11 @@ function UserDialog(props) {
       ...user,
       [name]: target.value,
     });
+  };
+
+  const handleCloseClean = () => {
+    setUser({ username: '', email: '' });
+    handleClose();
   };
 
   return (
@@ -65,7 +72,7 @@ function UserDialog(props) {
           variant="filled"
           onChange={handleInputChange}
           color="secondary"
-          value={editUser && user ? user.username : ''}
+          value={user.username}
           fullWidth
         />
 
@@ -78,13 +85,13 @@ function UserDialog(props) {
           variant="filled"
           onChange={handleInputChange}
           color="secondary"
-          value={editUser && user ? user.email : ''}
+          value={user.email}
           fullWidth
         />
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={handleClose} color="default">
+        <Button onClick={handleCloseClean} color="default">
           Cancel
         </Button>
 

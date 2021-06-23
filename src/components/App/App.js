@@ -12,12 +12,15 @@ import Header from '../Header';
 import UserList from '../UserList';
 import UserDialog from '../UserDialog';
 
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
 // Style imports
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../../styles/theme';
 import { GlobalStyle } from '../../styles/global';
-import { Container } from './styles';
+import { Container, Alert } from './styles';
 
 function App() {
   // State
@@ -26,6 +29,11 @@ function App() {
   const [toDeleteUsers, setToDeleteUsers] = useState([]);
   const [dialogWait, setDialogWait] = useState(false);
   const [toEditUser, setToEditUser] = useState(null);
+  const [notification, setNotification] = useState({
+    open: false,
+    message: '',
+    severity: '',
+  });
   // Hooks
   const [users, refreshUsers, user, getUser] = useCurrentUsers();
   const [newUserStatus, setNewUser] = useCreateUser();
@@ -36,6 +44,57 @@ function App() {
   useEffect(() => {
     refreshUsers();
   }, [newUserStatus, deleteUsersStatus, editUserStatus]);
+
+  // Launch alert for new user based on response
+  useEffect(() => {
+    if (newUserStatus && newUserStatus.ok) {
+      setNotification({
+        open: true,
+        message: 'New user create successfully!',
+        severity: 'success',
+      });
+    } else if (newUserStatus && !newUserStatus.ok) {
+      setNotification({
+        open: true,
+        message: 'Failed to create user',
+        severity: 'error',
+      });
+    }
+  }, [newUserStatus]);
+
+  // Launch alert for deleted user based on response
+  useEffect(() => {
+    if (deleteUsersStatus && deleteUsersStatus.ok) {
+      setNotification({
+        open: true,
+        message: 'User deleted successfully!',
+        severity: 'success',
+      });
+    } else if (deleteUsersStatus && !deleteUsersStatus.ok) {
+      setNotification({
+        open: true,
+        message: 'Failed to delete user',
+        severity: 'error',
+      });
+    }
+  }, [deleteUsersStatus]);
+
+  // Launch alert for deleted user based on response
+  useEffect(() => {
+    if (editUserStatus && editUserStatus.ok) {
+      setNotification({
+        open: true,
+        message: 'User updated successfully!',
+        severity: 'success',
+      });
+    } else if (editUserStatus && !editUserStatus.ok) {
+      setNotification({
+        open: true,
+        message: 'Failed to update user',
+        severity: 'error',
+      });
+    }
+  }, [editUserStatus]);
 
   // Once we get the user object, add it to local state and clear the loading
   useEffect(() => {
@@ -90,6 +149,17 @@ function App() {
     setDeleteDisabled(true);
   };
 
+  const handleNotificationClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setNotification({
+      ...notification,
+      open: false,
+    });
+  };
+
   return (
     <MuiThemeProvider theme={theme}>
       <ThemeProvider theme={theme}>
@@ -114,6 +184,28 @@ function App() {
           loading={dialogWait}
           handleClose={handleDialogClose}
           handleSave={handleDialogSave}
+        />
+
+        <Alert
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={notification.open}
+          autoHideDuration={6000}
+          onClose={handleNotificationClose}
+          message={notification.message}
+          severity={notification.severity}
+          action={
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleNotificationClose}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          }
         />
       </ThemeProvider>
     </MuiThemeProvider>

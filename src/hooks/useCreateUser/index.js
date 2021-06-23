@@ -13,9 +13,7 @@ function useCreateUser() {
         body: JSON.stringify(user),
       });
 
-      if (response.ok) {
-        setNewUserStatus(user);
-      }
+      setNewUserStatus(response);
     } catch (e) {
       console.error('Error creating user: ', e);
     }

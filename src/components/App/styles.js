@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+import Snackbar from '@material-ui/core/Snackbar';
 
 const Container = styled.main`
   display: flex;
@@ -12,4 +14,20 @@ const Container = styled.main`
   background-color: ${(props) => props.theme.palette.background.default};
 `;
 
-export { Container };
+const Alert = styled(Snackbar)`
+  & .MuiSnackbarContent-root {
+    ${(props) =>
+      props.severity === 'error' &&
+      css`
+        background-color: ${(props) => props.theme.palette.error.light};
+      `};
+
+    ${(props) =>
+      props.severity === 'success' &&
+      css`
+        background-color: ${(props) => props.theme.palette.success.light};
+      `};
+  }
+`;
+
+export { Container, Alert };

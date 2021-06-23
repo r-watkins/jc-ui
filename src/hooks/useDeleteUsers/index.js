@@ -16,9 +16,7 @@ function useCreateUser() {
           }
         );
 
-        if (response.ok) {
-          setDeleteUsersStatus(response);
-        }
+        setDeleteUsersStatus(response);
       });
     } catch (e) {
       console.error('Error deleting user: ', e);
