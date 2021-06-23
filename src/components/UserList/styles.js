@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
 import Paper from '@material-ui/core/Paper';
+import MuiList from '@material-ui/core/List';
 
 const Container = styled(Paper)`
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   width: ${(props) => props.theme.size.base};
   height: 100%;
   margin-block-start: 1rem;
@@ -19,4 +23,9 @@ const ListHead = styled.section`
   background-color: ${(props) => props.theme.palette.primary.light};
 `;
 
-export { Container, ListHead };
+const List = styled(MuiList)`
+  height: 100%;
+  overflow-y: auto;
+`;
+
+export { Container, ListHead, List };
