@@ -33,9 +33,13 @@ function UserDialog(props) {
     });
   };
 
-  const handleCloseClean = () => {
+  const handleCloseClean = (user) => {
     setUser({ username: '', email: '' });
-    handleClose();
+    if (user) {
+      handleSave(user);
+    } else {
+      handleClose();
+    }
   };
 
   return (
@@ -95,12 +99,7 @@ function UserDialog(props) {
           Cancel
         </Button>
 
-        <Button
-          onClick={() => {
-            handleSave(user);
-          }}
-          color="secondary"
-        >
+        <Button onClick={() => handleCloseClean(user)} color="secondary">
           Save
         </Button>
       </DialogActions>

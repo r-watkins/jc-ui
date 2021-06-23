@@ -6,9 +6,17 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import CloudOutlinedIcon from '@material-ui/icons/CloudOutlined';
 
 // Style imports
-import { TopBorder, Toolbar, AddButton, DeleteButton } from './styles';
+import {
+  TopBorder,
+  Toolbar,
+  Branding,
+  Logo,
+  AddButton,
+  DeleteButton,
+} from './styles';
 
 function Header(props) {
   const { handleDialogOpen, deleteDisabled, handleDelete } = props;
@@ -18,9 +26,15 @@ function Header(props) {
       <TopBorder />
 
       <Toolbar>
-        <Typography variant="h5" component="h1">
-          JumpCloud-UI
-        </Typography>
+        <Branding>
+          <Logo>
+            <CloudOutlinedIcon fontSize="large" />
+          </Logo>
+
+          <Typography variant="h5" component="h1">
+            JumpCloud-UI
+          </Typography>
+        </Branding>
 
         <div>
           <AddButton

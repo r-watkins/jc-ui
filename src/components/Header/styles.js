@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 const TopBorder = styled.div`
   width: 100%;
   height: 0.5rem;
-  background-color: ${(props) => props.theme.palette.secondary.dark}; ;
+  background-color: ${(props) => props.theme.palette.secondary.dark};
 `;
 
 const Toolbar = styled(MuiToolbar)`
@@ -15,6 +15,16 @@ const Toolbar = styled(MuiToolbar)`
   justify-content: space-between;
   width: ${(props) => props.theme.size.base};
   margin: 0 auto;
+`;
+
+const Branding = styled.section`
+  display: flex;
+  align-items: center;
+`;
+
+const Logo = styled.section`
+  margin-inline-end: 1rem;
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 
 const AddButton = styled(Button)`
@@ -39,4 +49,4 @@ const DeleteButton = styled(Button)`
   }
 `;
 
-export { TopBorder, Toolbar, AddButton, DeleteButton };
+export { TopBorder, Toolbar, Branding, Logo, AddButton, DeleteButton };
