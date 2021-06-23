@@ -11,6 +11,10 @@ const Container = styled(Paper)`
   height: 100%;
   margin-block-start: 1rem;
   box-sizing: border-box;
+
+  @media only screen and (max-width: ${(props) => props.theme.breakpoints.md}) {
+    width: 100%;
+  }
 `;
 
 const ListHead = styled.section`

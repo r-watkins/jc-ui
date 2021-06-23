@@ -10,11 +10,26 @@ const TopBorder = styled.div`
 `;
 
 const Toolbar = styled(MuiToolbar)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: ${(props) => props.theme.size.base};
-  margin: 0 auto;
+  && {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: ${(props) => props.theme.size.base};
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    @media only screen and (max-width: ${(props) =>
+        props.theme.breakpoints.md}) {
+      width: 100%;
+    }
+
+    @media only screen and (max-width: ${(props) =>
+        props.theme.breakpoints.sm}) {
+      flex-direction: column;
+      align-items: start;
+      padding-block-end: 1rem;
+    }
+  }
 `;
 
 const Branding = styled.section`
@@ -40,7 +55,6 @@ const AddButton = styled(Button)`
 
 const DeleteButton = styled(Button)`
   && {
-    margin-inline-end: 1rem;
     background-color: ${(props) => props.theme.palette.error.light};
 
     &:hover {
