@@ -22,7 +22,7 @@ function useCreateUser() {
     } catch (e) {
       console.error('Error editing user: ', e);
     }
-  });
+  }, []);
 
   return [editUserStatus, setEditUser];
 }

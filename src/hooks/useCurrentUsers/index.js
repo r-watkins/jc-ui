@@ -12,7 +12,7 @@ function useCurrentUsers() {
     } catch (e) {
       console.error('Error retrieving user list: ', e);
     }
-  });
+  }, []);
 
   const getUser = useCallback(async (userId) => {
     try {
@@ -24,7 +24,7 @@ function useCurrentUsers() {
     } catch (e) {
       console.error('Error retrieving user list: ', e);
     }
-  });
+  }, []);
 
   return [users, refreshUsers, user, getUser];
 }

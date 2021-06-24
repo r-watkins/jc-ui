@@ -43,6 +43,7 @@ function App() {
   // Refresh user list when a new user status updates
   useEffect(() => {
     refreshUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newUserStatus, deleteUsersStatus, editUserStatus]);
 
   // Launch alert for new user based on response

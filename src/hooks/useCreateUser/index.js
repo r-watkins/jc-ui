@@ -17,7 +17,7 @@ function useCreateUser() {
     } catch (e) {
       console.error('Error creating user: ', e);
     }
-  });
+  }, []);
 
   return [newUserStatus, setNewUser];
 }

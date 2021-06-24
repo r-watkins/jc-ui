@@ -21,7 +21,7 @@ function useCreateUser() {
     } catch (e) {
       console.error('Error deleting user: ', e);
     }
-  });
+  }, []);
 
   return [deleteUsersStatus, setDeleteUsers];
 }
