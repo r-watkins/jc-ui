@@ -14,6 +14,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 function UserDialog(props) {
   const { open, editUser, handleClose, handleSave, loading } = props;
 
+  // State
   const [user, setUser] = useState({ username: '', email: '' });
 
   // store the editable user in the local state
@@ -33,6 +34,7 @@ function UserDialog(props) {
     });
   };
 
+  // clear the inputs on close
   const handleCloseClean = (user) => {
     setUser({ username: '', email: '' });
     if (user) {
